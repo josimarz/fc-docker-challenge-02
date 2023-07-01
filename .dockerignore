@@ -1,0 +1,6 @@
+dist
+docker-entrypoint-initdb.d
+nginx
+node_modules
+.gitignore
+docker-compose.yml

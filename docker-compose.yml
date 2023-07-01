@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: fc-docker-challenge-02_database
+    restart: always
+    environment:
+      - MYSQL_DATABASE=fullcycle
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=fT0gB4oO4bT3uH3y
+      - MYSQL_ROOT_PASSWORD=cJ3iI0yK7hR6wN2w
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+  app:
+    build:
+      context: .
+    container_name: fc-docker-challenge-02_app
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+  nginx:
+    image: nginx:mainline-alpine
+    container_name: fc-docker-challenge-02_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

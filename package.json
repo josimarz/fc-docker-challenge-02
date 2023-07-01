@@ -1,0 +1,19 @@
+{
+  "name": "fc-docker-challenge-02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild index.js --bundle --platform=node --minify --outdir=dist",
+    "start:dev": "node index",
+    "start:prod": "node dist/index"
+  },
+  "author": "Josimar Zimermann <josimarz@yahoo.com.br>",
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "0.18.11",
+    "express": "^4.18.2",
+    "mysql2": "^3.4.3"
+  }
+}
