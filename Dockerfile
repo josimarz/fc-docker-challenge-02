@@ -1,18 +1,11 @@
-FROM node:lts-alpine AS builder
+FROM node:lts-alpine
 
 WORKDIR /var/app
 
 COPY package.json ./
 COPY package-lock.json ./
-COPY index.js ./
+COPY ./src ./
 
 RUN npm install
-RUN npm run build
 
-FROM node:lts-alpine AS deploy
-
-WORKDIR /var/app
-
-COPY --from=builder /var/app/dist ./dist
-
-ENTRYPOINT [ "node", "dist/index" ]
+ENTRYPOINT [ "node", "src/index" ]

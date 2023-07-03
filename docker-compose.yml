@@ -30,6 +30,8 @@ services:
       - "3000:3000"
     networks:
       - app-network
+    volumes:
+      - ./src:/var/app/src
   nginx:
     image: nginx:mainline-alpine
     container_name: fc-docker-challenge-02_nginx
